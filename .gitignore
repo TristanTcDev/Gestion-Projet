@@ -2,3 +2,6 @@ __pycache__
 .env
 env/
 .vscode
+iiwa/bin
+iiwa/include
+iiwa/lib
