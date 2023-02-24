@@ -1,0 +1,80 @@
+create-starter-kit-demo-capacitive-watermark-st-iiwa
+--> delete all devices
+--> calling create_full_capacitive_device.sh
+--> created device is 63d947f19c35b625a9c848d3
+--> calling create_only_voltage_monitor_sensor.sh 63d947f19c35b625a9c848d3
+--> copy empty IIWA configuration files from /home/pi/intel-irris-waziapp/config/empty
+--> add 63d947f19c35b625a9c848d3 to IIWA
+--> set default configuration for 63d947f19c35b625a9c848d3 in IIWA
+--> make 63d947f19c35b625a9c848d3 the active device for IIWA
+--> calling create_full_tensiometer_device_with_dev_addr.sh 2 B1
+--> created device is 63d947f19c35b625a9c848d7
+--> calling create_only_temperature_sensor.sh 63d947f19c35b625a9c848d7
+--> calling create_only_voltage_monitor_sensor.sh 63d947f19c35b625a9c848d7
+--> add 63d947f19c35b625a9c848d7 to IIWA
+--> set default configuration for 63d947f19c35b625a9c848d7 in IIWA
+--> copy new IIWA configuration files to IIWA config folder
+create-starter-kit-demo-capacitive-watermark-st-iiwa
+--> delete all devices
+--> calling create_full_capacitive_device.sh
+--> created device is 63f1fdb99c35b617a10da9c0
+--> calling create_only_voltage_monitor_sensor.sh 63f1fdb99c35b617a10da9c0
+--> copy empty IIWA configuration files from /home/pi/intel-irris-waziapp/config/empty
+--> add 63f1fdb99c35b617a10da9c0 to IIWA
+--> set default configuration for 63f1fdb99c35b617a10da9c0 in IIWA
+--> make 63f1fdb99c35b617a10da9c0 the active device for IIWA
+--> calling create_full_tensiometer_device_with_dev_addr.sh 2 B1
+--> created device is 63f1fdba9c35b617a10da9c4
+--> calling create_only_temperature_sensor.sh 63f1fdba9c35b617a10da9c4
+--> calling create_only_voltage_monitor_sensor.sh 63f1fdba9c35b617a10da9c4
+--> add 63f1fdba9c35b617a10da9c4 to IIWA
+--> set default configuration for 63f1fdba9c35b617a10da9c4 in IIWA
+--> copy new IIWA configuration files to IIWA config folder
+create-starter-kit-demo-capacitive-watermark-st-iiwa
+--> delete all devices
+--> calling create_full_capacitive_device.sh
+--> created device is 63f4f1499c35b60fdf020747
+--> calling create_only_voltage_monitor_sensor.sh 63f4f1499c35b60fdf020747
+--> copy empty IIWA configuration files from /home/pi/intel-irris-waziapp/config/empty
+--> add 63f4f1499c35b60fdf020747 to IIWA
+--> set default configuration for 63f4f1499c35b60fdf020747 in IIWA
+--> make 63f4f1499c35b60fdf020747 the active device for IIWA
+--> calling create_full_tensiometer_device_with_dev_addr.sh 2 B1
+--> created device is 63f4f1499c35b60fdf02074b
+--> calling create_only_temperature_sensor.sh 63f4f1499c35b60fdf02074b
+--> calling create_only_voltage_monitor_sensor.sh 63f4f1499c35b60fdf02074b
+--> add 63f4f1499c35b60fdf02074b to IIWA
+--> set default configuration for 63f4f1499c35b60fdf02074b in IIWA
+--> copy new IIWA configuration files to IIWA config folder
+create-starter-kit-demo-capacitive-watermark-st-iiwa
+--> delete all devices
+--> calling create_full_capacitive_device.sh
+--> created device is 63f4f7289c35b60fdf020753
+--> calling create_only_voltage_monitor_sensor.sh 63f4f7289c35b60fdf020753
+--> copy empty IIWA configuration files from /home/pi/intel-irris-waziapp/config/empty
+--> add 63f4f7289c35b60fdf020753 to IIWA
+--> set default configuration for 63f4f7289c35b60fdf020753 in IIWA
+--> make 63f4f7289c35b60fdf020753 the active device for IIWA
+--> calling create_full_tensiometer_device_with_dev_addr.sh 2 B1
+--> created device is 63f4f7299c35b60fdf020757
+--> calling create_only_temperature_sensor.sh 63f4f7299c35b60fdf020757
+--> calling create_only_voltage_monitor_sensor.sh 63f4f7299c35b60fdf020757
+--> add 63f4f7299c35b60fdf020757 to IIWA
+--> set default configuration for 63f4f7299c35b60fdf020757 in IIWA
+--> copy new IIWA configuration files to IIWA config folder
+create-starter-kit-demo-capacitive-watermark-st-iiwa
+--> delete all devices
+--> calling create_full_capacitive_device.sh
+--> created device is 63f65e049c35b6598d88d4da
+--> calling create_only_voltage_monitor_sensor.sh 63f65e049c35b6598d88d4da
+--> copy empty IIWA configuration files from /home/pi/intel-irris-waziapp/config/empty
+--> add 63f65e049c35b6598d88d4da to IIWA
+--> set default configuration for 63f65e049c35b6598d88d4da in IIWA
+--> make 63f65e049c35b6598d88d4da the active device for IIWA
+--> calling create_full_tensiometer_device_with_dev_addr.sh 2 B1
+--> created device is 63f65e059c35b6598d88d4de
+--> calling create_only_temperature_sensor.sh 63f65e059c35b6598d88d4de
+--> calling create_only_voltage_monitor_sensor.sh 63f65e059c35b6598d88d4de
+--> add 63f65e059c35b6598d88d4de to IIWA
+--> set default configuration for 63f65e059c35b6598d88d4de in IIWA
+--> copy new IIWA configuration files to IIWA config folder

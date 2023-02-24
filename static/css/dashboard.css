@@ -1,0 +1,50 @@
+body {
+    background-color: #ffffff;
+    height: 100%;
+}
+
+.MuiTypography-noWrap {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.MuiTypography-h1 {
+    font-size: 1.25rem;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 0.0075em;
+}
+.MuiTypography-root {
+    margin: 0;
+}
+.jssWA1 {
+    color: unset;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+
+.semi-circle{
+    width: 50px;
+    height: 25px;
+    border: 10px solid white;
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    border-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.plot_center
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    height: auto;
+
+    border-radius: 25px;
+    border: 2px solid #f4b548;
+    /*padding: 20px; */
+    padding-top: 20px;
+    background-color: #ffffff;
+}
