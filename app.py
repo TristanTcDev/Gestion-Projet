@@ -98,6 +98,7 @@ active_devices = []
 t_active_devices = ()
 
 all_devices = []
+t_all_devices = ()
 
 class Sensor:
 	def __init__(self, sensor_name):
@@ -150,8 +151,15 @@ def dashboard():
 						added_devices = "No devices added to IIWA. Go to Device Manager."
 				else:
 						# parse json intel-irris-devices
-						print("Added devices")
-						print(added_devices)
+						# print("Added devices: ")
+						# print(read_devices)
+						all_devices.clear()
+						for i in range(length):
+							if(read_devices[i]['device_id'] != 'default'):
+								device = (read_devices[i]['device_id'], read_devices[i]['device_name'], read_devices[i]['sensors_structure'])
+								#print("device number " + str(i) + " :")
+								all_devices.insert(i - 1, device)
+
 						no_devices = False
 						monitor_all_configured_sensors()
 
@@ -170,9 +178,9 @@ def dashboard():
 				else:
 						active_sensor_type = active_device_configuration['value']['sensor_type']
 						active_soil_type = active_device_configuration['value']['soil_type']
-
-						print("ACTIVE DEVICE: ")
-						print(active_device_id)
+						t_all_devices = tuple(all_devices)
+						# print("ACTIVE DEVICE: ")
+						# print(active_device_id)
 						#active_devices.insert(len(active_devices) + 1 ,active_device_id)
 						#t_active_devices = tuple(active_devices)
 
@@ -185,7 +193,7 @@ def dashboard():
 															 soil_type=active_soil_type,
 															 soil_condition=active_device_soil_condition,
 															 level_file=active_level_file,
-															 t_active_devices=t_active_devices)
+															 t_all_devices=t_all_devices)
 #---------------------#
 
 

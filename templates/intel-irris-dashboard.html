@@ -57,19 +57,23 @@
     <!-- <div class="semi-circle" id="semi-circle"></div> -->
     <!-- Partie qui permet l'affichage d'un périphérique, partie à rendre dynamique-->
     <!-- Utiliser les foreach de Jinja2-->
+    {% for device in t_all_devices %}
     <div id="soil_parameters" class="plot_center">
-		<table class="tg">
-		<thead>
-			<tr>
-        <td>{{ t_active_devices }}</td>
-				<td class="tg-c3ow"><img src="{{ url_for('static', filename=level_file) }}" height="60"></td>
-        <td class="tg-0pky"><b>Soil type is {{ soil_type }}</b></td>
-        <td class="tg-0pky"><b>Soil condition is {{ soil_condition }}</b></td>
-			</tr>
-		</thead>
-		</table>
+      <table class="tg">
+      <thead>
+        <tr>
+          <td>{{ device[1] }}</td>
+          <td class="tg-c3ow"><img src="{{ url_for('static', filename=level_file) }}" height="60"></td>
+          <td class="tg-0pky"><b>Soil type is {{ soil_type }}</b></td>
+          <td class="tg-0pky"><b>Soil condition is {{ soil_condition }}</b></td>
+        </tr>
+      </thead>
+      </table>
+    </div>
+    <p style="width:400px;"></p>  <!-- Add space between rows-->
+    {% endfor %}
 
-		</div>
+    <!--
     <div id="soil_parameters" class="plot_center">
     
       <table class="tg">
@@ -83,7 +87,7 @@
         </tr>
       </thead>
       </table>
-      </div>
+      </div> -->
     <!-- <p id="last_value_insight" style="text-align:center; white-space: nowrap"><span id="insight"></span></p> -->
 
     <p id="no_sensor_error">Oops! Select a sensor id of the current device to see its data and compute the index value
