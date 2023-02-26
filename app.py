@@ -94,8 +94,7 @@ active_device_soil_condition = "undefined"
 active_device_value_index = 0
 active_device_configuration = {}
 
-active_devices = []
-t_active_devices = ()
+sensors = []
 
 all_devices = []
 t_all_devices = ()
@@ -151,12 +150,25 @@ def dashboard():
 						added_devices = "No devices added to IIWA. Go to Device Manager."
 				else:
 						# parse json intel-irris-devices
-						# print("Added devices: ")
-						# print(read_devices)
+						print("Added devices: ")
+						print(read_devices)
 						all_devices.clear()
 						for i in range(length):
 							if(read_devices[i]['device_id'] != 'default'):
-								device = (read_devices[i]['device_id'], read_devices[i]['device_name'], read_devices[i]['sensors_structure'])
+								#device = (read_devices[i]['device_id'], read_devices[i]['device_name']) #, read_devices[i]['sensors_structure'])
+								device_id = read_devices[i]['device_id']
+								device_name = read_devices[i]['device_name']
+								sensor_id = "undefined"
+								sensor_type = "undefined"
+								soil_moisture = 0
+								if(len(sensors) > 0):
+									for j in range(len(sensors)):
+										if sensors[j][0] == device_id:
+											sensor_id = sensors[j][1]
+											sensor_type = sensors[j][2]
+											soil_moisture = sensors[j][3]
+								
+								device = (device_id, device_name, sensor_type, sensor_id, soil_moisture)
 								#print("device number " + str(i) + " :")
 								all_devices.insert(i - 1, device)
 
@@ -176,6 +188,8 @@ def dashboard():
 						active_sensor_type = "undefined"
 						active_soil_type = "undefined"
 				else:
+						print("ACTIVE DEVICE CONFIGURATION: ")
+						print(active_device_configuration)
 						active_sensor_type = active_device_configuration['value']['sensor_type']
 						active_soil_type = active_device_configuration['value']['soil_type']
 						t_all_devices = tuple(all_devices)
@@ -718,7 +732,7 @@ def monitor_all_configured_sensors():
 	
 		sensor_type='undefined'
 		number_of_configurations = 0
-		sensor_tuple = () # Create a tuple to add sensor informations such as the device_id, sensor_id
+		
 		
 		get_ActiveDeviceSensorID()
 		
@@ -736,7 +750,18 @@ def monitor_all_configured_sensors():
 				f.close()
 				
 				number_of_configurations = len(read_config['sensors'])
-				
+
+				# print("Affichage de tous les sensors (ou pas): ")
+				# print(read_config['sensors'])
+
+				sensors.clear()
+				for i in range(len(read_config['sensors'])):
+					sensor = (read_config['sensors'][i]['device_id'], read_config['sensors'][i]['sensor_id'], read_config['sensors'][i]['value']['sensor_type'], read_config['sensors'][i]['value']['last_value'])
+					sensors.insert(i - 1, sensor)
+
+				print("Added sensors in sensors list: ")
+				print(sensors)
+
 				if (number_of_configurations > 0):
 						for x in range(0, number_of_configurations):
 								deviceID = read_config['sensors'][x]['device_id']
