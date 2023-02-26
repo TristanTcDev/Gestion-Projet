@@ -91,7 +91,7 @@ function update_sensor_select() {
 				var sensor_radio = document.getElementById('select_sensor_radio');
 				sensor_radio.innerHTML = "";
 
-				for (j = 0; j <= no_sensors; j++) {
+				for (j = 0; j < no_sensors; j++) {
 						var sensor_name = sensors_list[j]['name']
 						
 						if (sensor_name.match(/humidity/i)) {
