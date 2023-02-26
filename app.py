@@ -128,7 +128,7 @@ class Device:
 
 @app.route("/")
 def dashboard():
-
+		t_all_devices = ()
 		# check if there are devices in devices JSON
 		if path.isfile(added_devices_filename) is False:	# Check if data.json file exists
 				added_devices = "List of added devices not found!"
