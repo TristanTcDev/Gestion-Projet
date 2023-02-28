@@ -99,27 +99,6 @@ sensors = []
 all_devices = []
 t_all_devices = ()
 
-class Sensor:
-	def __init__(self, sensor_name):
-		self.sensor_name = sensor_name
-
-class Device:
-	def __init__(self, device_id, device_name):
-		self.device_id = device_id
-		self.device_name = device_name
-
-	def add_sensor(self, sensor):
-		self.sensors.insert(sensor)
-
-	def set_default_sensor(self, sensor):
-		self.default_sensor = sensor
-
-	def get_default_sensor(self):
-		return self.default_sensor
-	
-	def get_all_sensors(self):
-		return self.sensors
-
 
 # Ce qu'il faut faire, lire le intel-irris-devices.json pour instancier chaque devices
 # Ensuite il faut lire le intel-irris-conf.json pour ajouter à chaque devices le sensor par défaut
@@ -161,14 +140,27 @@ def dashboard():
 								sensor_id = "undefined"
 								sensor_type = "undefined"
 								soil_moisture = 0
+								value_index_file = "undefined"
+								value_type = "undefined"
 								if(len(sensors) > 0):
 									for j in range(len(sensors)):
 										if sensors[j][0] == device_id:
+											print("Affichage sensor: ")
+											print(sensors[j])
 											sensor_id = sensors[j][1]
-											sensor_type = sensors[j][2]
+											if sensors[j][2] == "tensiometer_cbar":
+												sensor_type = "tensiometer"
+												value_type = "cbar"
+											elif sensors[j][2] == "tensiometer_raw":
+												sensor_type = "tensiometer"
+												value_type = "raw"
+											else:
+												sensor_type = sensors[j][2]
+												value_type = "raw"
 											soil_moisture = sensors[j][3]
+											value_index_file = 'images/level'+str(sensors[j][4])+'.png'
 								
-								device = (device_id, device_name, sensor_type, sensor_id, soil_moisture)
+								device = (device_id, device_name, sensor_type, sensor_id, soil_moisture, value_index_file, value_type)
 								#print("device number " + str(i) + " :")
 								all_devices.insert(i - 1, device)
 
@@ -197,6 +189,9 @@ def dashboard():
 						# print(active_device_id)
 						#active_devices.insert(len(active_devices) + 1 ,active_device_id)
 						#t_active_devices = tuple(active_devices)
+
+				print("Active device value index")
+				print(active_device_value_index)
 
 				active_level_file='images/level'+str(active_device_value_index)+'.png'
 						
@@ -755,23 +750,28 @@ def monitor_all_configured_sensors():
 				# print(read_config['sensors'])
 
 				sensors.clear()
-				for i in range(len(read_config['sensors'])):
-					sensor = (read_config['sensors'][i]['device_id'], read_config['sensors'][i]['sensor_id'], read_config['sensors'][i]['value']['sensor_type'], read_config['sensors'][i]['value']['last_value'])
-					sensors.insert(i - 1, sensor)
+				# for i in range(len(read_config['sensors'])):
+
 
 				print("Added sensors in sensors list: ")
 				print(sensors)
 
 				if (number_of_configurations > 0):
 						for x in range(0, number_of_configurations):
+								sensor = []
+								t_sensor = ()
+
 								deviceID = read_config['sensors'][x]['device_id']
 								sensorID = read_config['sensors'][x]['sensor_id']
 
-								print("Device ID: ")
-								print(deviceID)
+								# print("Device ID: ")
+								# print(deviceID)
 
-								print("Sensor ID")
-								print(sensorID)
+								# print("Sensor ID")
+								# print(sensorID)
+
+								sensor.insert(len(sensor), deviceID)
+								sensor.insert(len(sensor), sensorID)
 								
 								url = BASE_URL+"devices/" + deviceID + '/sensors/' + sensorID
 								
@@ -782,15 +782,22 @@ def monitor_all_configured_sensors():
 								if (response.status_code == 404):
 										print("monitor_all_configured_sensors : Error 404! Check IDs of device and sensor of configured device")
 								elif (response.status_code == 200):
+
+
 										sensor_DataResponse = response.json()
 										last_PostedSensorValue = sensor_DataResponse["value"]
 
 										print("monitor_all_configured_sensors : last posted sensor value was %s" % last_PostedSensorValue)
 										
 										sensor_type=read_config['sensors'][x]['value']['sensor_type']
-									
+										sensor.insert(len(sensor), sensor_type)
+										sensor.insert(len(sensor), last_PostedSensorValue)
+										# sensor = [deviceID, sensorID, sensor_type, read_config['sensors'][x]['value']['last_value']]
+										
+
 										if sensor_type == 'capacitive':
 												value_index=get_capacitive_soil_condition(last_PostedSensorValue, deviceID, sensorID, read_config['sensors'][x])
+												sensor.insert(len(sensor), value_index)
 												if deviceID == active_device_id and sensorID == active_sensor_id:
 														active_device_soil_condition = capacitive_soil_condition
 														active_device_configuration = read_config['sensors'][x] 
@@ -798,10 +805,14 @@ def monitor_all_configured_sensors():
 														
 										if 'tensiometer' in sensor_type:	
 												value_index=get_tensiometer_soil_condition(last_PostedSensorValue, deviceID, sensorID, read_config['sensors'][x])
+												sensor.insert(len(sensor), value_index)
 												if deviceID == active_device_id and sensorID == active_sensor_id:
 														active_device_soil_condition = tensiometer_soil_condition
 														active_device_configuration = read_config['sensors'][x]
 														active_device_value_index = value_index
+
+								t_sensor = tuple(sensor)
+								sensors.insert(x - 1, t_sensor)
 																								
 		else:
 				print("monitor_all_configured_sensors : No sensor configuration has been made")				

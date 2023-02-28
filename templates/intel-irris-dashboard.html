@@ -48,11 +48,12 @@
     <p>{{ added_devices }}</p>
     {% elif no_devices == False %}
     
+
     <p id="deviceid">Active device: <span id="deviceid_id"></span></p>
     <p id="sensorid">Active sensor: <span id="sensorid_id"></span></p>
     <p id="sensor_type">Sensor Type: {{ sensor_type }}</p>
     <p id="lastvalue">Last soil moisture value: <span id="lastvalue_value"></span></p>
-		
+
     <br>
     <!-- <div class="semi-circle" id="semi-circle"></div> -->
     <!-- Partie qui permet l'affichage d'un périphérique, partie à rendre dynamique-->
@@ -62,12 +63,14 @@
       <table class="tg">
       <thead>
         <tr>
-          <td>{{ device[1] }}</td>
-          <td class="tg-c3ow"><img src="{{ url_for('static', filename=level_file) }}" height="60"></td>
+          <td id="deviceid">{{ device[1] }}</td>
+          <td>{{ device[6] }}</td>
+          <td class="tg-c3ow"><img src="{{ url_for('static', filename=device[5]) }}" height="60"></td>
           <td class="tg-0pky"><b>Soil type is {{ soil_type }}</b></td>
           <td class="tg-0pky"><b>Soil condition is {{ soil_condition }}</b></td>
         </tr>
-        <td>{{ device[2] }}</td>
+        <td id="sensor_type">[{{ device[2] }}]</td>
+        <td id="lastvalue">{{ device[4] }}</td>
       </thead>
       </table>
     </div>
