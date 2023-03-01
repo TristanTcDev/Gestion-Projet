@@ -140,25 +140,26 @@ def dashboard():
 								sensor_id = "undefined"
 								sensor_type = "undefined"
 								soil_moisture = 0
-								value_index_file = "undefined"
+								value_index_file = 'images/level'+str(0)+'.png'
 								value_type = "undefined"
 								if(len(sensors) > 0):
 									for j in range(len(sensors)):
-										if sensors[j][0] == device_id:
-											print("Affichage sensor: ")
-											print(sensors[j])
-											sensor_id = sensors[j][1]
-											if sensors[j][2] == "tensiometer_cbar":
-												sensor_type = "tensiometer"
-												value_type = "cbar"
-											elif sensors[j][2] == "tensiometer_raw":
-												sensor_type = "tensiometer"
-												value_type = "raw"
-											else:
-												sensor_type = sensors[j][2]
-												value_type = "raw"
-											soil_moisture = sensors[j][3]
-											value_index_file = 'images/level'+str(sensors[j][4])+'.png'
+										if(len(sensors[j]) == 5):
+											if sensors[j][0] == device_id:
+												print("Affichage sensor: ")
+												print(sensors[j])
+												sensor_id = sensors[j][1]
+												if sensors[j][2] == "tensiometer_cbar":
+													sensor_type = "tensiometer"
+													value_type = "cbar"
+												elif sensors[j][2] == "tensiometer_raw":
+													sensor_type = "tensiometer"
+													value_type = "raw"
+												else:
+													sensor_type = sensors[j][2]
+													value_type = "raw"
+												soil_moisture = sensors[j][3]
+												value_index_file = 'images/level'+str(sensors[j][4])+'.png'
 								
 								device = (device_id, device_name, sensor_type, sensor_id, soil_moisture, value_index_file, value_type)
 								#print("device number " + str(i) + " :")
