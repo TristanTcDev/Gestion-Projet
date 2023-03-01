@@ -63,13 +63,13 @@
       <table class="tg">
       <thead>
         <tr>
-          <td id="deviceid">{{ device[1] }}</td>
+          <td id="deviceid">{{ device[1] }} <br> {{ device[2] }} </td>
           <td>{{ device[6] }}</td>
           <td class="tg-c3ow"><img src="{{ url_for('static', filename=device[5]) }}" height="60"></td>
           <td class="tg-0pky"><b>Soil type is {{ soil_type }}</b></td>
           <td class="tg-0pky"><b>Soil condition is {{ soil_condition }}</b></td>
         </tr>
-        <td id="sensor_type">[{{ device[2] }}]</td>
+        <!--<td id="sensor_type">[{{ device[2] }}]</td> -->
         <td id="lastvalue">{{ device[4] }}</td>
       </thead>
       </table>
