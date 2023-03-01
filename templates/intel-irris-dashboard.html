@@ -61,17 +61,19 @@
     {% for device in t_all_devices %}
     <div id="soil_parameters" class="plot_center">
       <table class="tg">
-      <thead>
-        <tr>
-          <td id="deviceid">{{ device[1] }} <br> {{ device[2] }} </td>
-          <td>{{ device[6] }}</td>
-          <td class="tg-c3ow"><img src="{{ url_for('static', filename=device[5]) }}" height="60"></td>
-          <td class="tg-0pky"><b>Soil type is {{ soil_type }}</b></td>
-          <td class="tg-0pky"><b>Soil condition is {{ soil_condition }}</b></td>
-        </tr>
-        <!--<td id="sensor_type">[{{ device[2] }}]</td> -->
-        <td id="lastvalue">{{ device[4] }}</td>
-      </thead>
+        <thead>
+          <tr>
+            <td id="deviceid" rowspan="2">{{ device[1] }} <br> {{ device[2] }} </td>
+            <td >{{ device[6] }}</td>
+            <td class="tg-c3ow" rowspan="2"><img src="{{ url_for('static', filename=device[5]) }}" height="60"></td>
+            <td class="tg-0pky" colspan="2"><b>Soil type is {{ soil_type }}</b></td>         
+          </tr>
+          <tr>
+            <td id="lastvalue" colspan="2">{{ device[4] }}</td>
+            <td class="tg-0pky" colspan="2"><b>Soil condition is {{ soil_condition }}</b></td>
+          </tr>
+                  <!--<td id="sensor_type">[{{ device[2] }}]</td> -->
+        </thead>
       </table>
     </div>
     <p style="width:400px;"></p>  <!-- Add space between rows-->
