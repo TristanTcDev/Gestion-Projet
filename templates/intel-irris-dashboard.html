@@ -45,14 +45,15 @@
   <div style="padding-left:16px; padding-top:16px">
     <h1 class="MuiTypography-root jssWA1 MuiTypography-h1 MuiTypography-noWrap">INTEL-IRRIS Irrigation WaziApp (IIWA)</h1>
     {% if no_devices == True %}
-    <p>{{ added_devices }}</p>
+    <p>There's no device to show</p>
     {% elif no_devices == False %}
     
-
+    <!--
     <p id="deviceid">Active device: <span id="deviceid_id"></span></p>
     <p id="sensorid">Active sensor: <span id="sensorid_id"></span></p>
     <p id="sensor_type">Sensor Type: {{ sensor_type }}</p>
     <p id="lastvalue">Last soil moisture value: <span id="lastvalue_value"></span></p>
+    -->
 
     <br>
     <!-- <div class="semi-circle" id="semi-circle"></div> -->
@@ -96,14 +97,6 @@
       </div> -->
     <!-- <p id="last_value_insight" style="text-align:center; white-space: nowrap"><span id="insight"></span></p> -->
 
-    <p id="no_sensor_error">Oops! Select a sensor id of the current device to see its data and compute the index value
-    </p>
-    <p id="sensor_id_error">Oops! The sensor id <span id="sensor_id"></span> seems to no longer be in the device.</p>
-    <p id="sensor_id_error_p2">Select a new sensor id from the Device Manager</p>
-    <!-- <p style="text-align: center;">Colors on graph are only indicative</p> -->
-    <!-- <div id="values_chart" class="plot_center"> -->
-      <script type="text/javascript" src="{{ url_for('static', filename='js/plot_values_chart.js') }}"></script>
-    <!-- </div> -->
     {% endif %}
   </div>
 </body>

@@ -191,10 +191,10 @@ def dashboard():
 						#active_devices.insert(len(active_devices) + 1 ,active_device_id)
 						#t_active_devices = tuple(active_devices)
 
-				print("Active device value index")
-				print(active_device_value_index)
+				# print("Active device value index")
+				# print(active_device_value_index)
 
-				active_level_file='images/level'+str(active_device_value_index)+'.png'
+				# active_level_file='images/level'+str(active_device_value_index)+'.png'
 						
 
 				return render_template("intel-irris-dashboard.html",
@@ -202,7 +202,6 @@ def dashboard():
 															 sensor_type=active_sensor_type,
 															 soil_type=active_soil_type,
 															 soil_condition=active_device_soil_condition,
-															 level_file=active_level_file,
 															 t_all_devices=t_all_devices)
 #---------------------#
 
