@@ -39,15 +39,17 @@ body {
 {
     margin-left: auto;
     margin-right: auto;
-    width: 95%;
+    /* width: 95%; */
     height: auto;
 
-    border-radius: 25px;
-    border: 2px solid #f4b548;
+    border-bottom: 2px solid black;
+    /* border-radius: 25px;
+    border: 2px solid #f4b548; */
     /*padding: 20px; */
-    padding-top: 20px;
+    /*padding-top: 20px; */
     background-color: #ffffff;
 }
+
 
 #deviceid {
     padding: 10px;

@@ -72,31 +72,37 @@
           <tr>
             <td id="lastvalue" colspan="2">{{ device[4] }}</td>
             <td class="tg-0pky" colspan="2"><b>Soil condition is {{ soil_condition }}</b></td>
+            <td>
+              <a onclick="postTest('{{ device[0] }}')"><img src="{{ url_for('static', filename='images/config.png') }}" style="cursor:pointer; width: 40px; height: 40px; border-radius:25%; border: 2px solid blue;"></a>
+            </td>
           </tr>
+                  <!-- href="{{ url_for('intel_irris_sensor_config') }}" -->
                   <!--<td id="sensor_type">[{{ device[2] }}]</td> -->
         </thead>
       </table>
+      <script>
+        function postTest(device_id) {
+          console.log(device_id);
+          fetch(`${window.origin}/test-app-route-sensor`, {
+            method: "POST",
+            credentials: "include",
+            body: JSON.stringify(device_id),
+            cache: "no-cache",
+            headers: new Headers({
+              "content-type": "application/json"
+            })
+          })
+        }
+      </script>
     </div>
     <p style="width:400px;"></p>  <!-- Add space between rows-->
     {% endfor %}
 
-    <!--
-    <div id="soil_parameters" class="plot_center">
-    
-      <table class="tg">
-      <thead>
-        <tr>
-          <td class="tg-c3ow" rowspan="2"><img src="{{ url_for('static', filename=level_file) }}" height="60"></td>
-          <td class="tg-0pky"><b>Soil type is {{ soil_type }}</b></td>
-        </tr>
-        <tr>
-          <td class="tg-0pky"><b>Soil condition is {{ soil_condition }}</b></td>
-        </tr>
-      </thead>
-      </table>
-      </div> -->
     <!-- <p id="last_value_insight" style="text-align:center; white-space: nowrap"><span id="insight"></span></p> -->
-
+    <!-- <p style="text-align: center;">Colors on graph are only indicative</p> -->
+    <!-- <div id="values_chart" class="plot_center"> -->
+      <script type="text/javascript" src="{{ url_for('static', filename='js/plot_values_chart.js') }}"></script>
+    <!-- </div> -->
     {% endif %}
   </div>
 </body>

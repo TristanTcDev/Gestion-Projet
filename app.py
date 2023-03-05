@@ -438,7 +438,14 @@ def intel_irris_device_manager():
 													 length=length)
 #---------------------#
 
+# Fonction de test pour affihcer le device_id reçu
+@app.route("/test-app-route-sensor", methods=['POST'])
+def test():
+	data = request.get_json()
+	print("Device id returned by the HTML: " + data)
+	return("hey")
 
+# Maintenant on doit modifier cette fonction pour pre-selectionner un sensor d'un device
 @app.route("/intel-irris-sensor-config", methods=['POST', 'GET'])
 def intel_irris_sensor_config():
 		# check if an active device is set
