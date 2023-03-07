@@ -443,6 +443,18 @@ def intel_irris_device_manager():
 def test():
 	data = request.get_json()
 	print("Device id returned by the HTML: " + data)
+	
+	# charger le JSON à partir de active_device_filename
+	with open(active_device_filename, 'r') as f:
+		jsonval = json.load(f)
+
+	# modifie l'ID du device
+	jsonval[0]['device_id'] = data
+
+	# enregistre la modif dans le fichier
+	with open(active_device_filename, 'w') as f:
+		json.dump(jsonval, f)
+	# mettre temps de chargement car l'update prend du temps
 	return("hey")
 
 # Maintenant on doit modifier cette fonction pour pre-selectionner un sensor d'un device
