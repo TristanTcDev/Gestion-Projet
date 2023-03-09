@@ -67,11 +67,11 @@
             <td id="deviceid" rowspan="2">{{ device[1] }} <br> {{ device[2] }} </td>
             <td >{{ device[6] }}</td>
             <td class="tg-c3ow" rowspan="2"><img src="{{ url_for('static', filename=device[5]) }}" height="60"></td>
-            <td class="tg-0pky" colspan="2"><b>Soil type is {{ soil_type }}</b></td>         
+            <td class="tg-0pky" colspan="2"><b>Soil type is {{ device[7] }}</b></td>         
           </tr>
           <tr>
             <td id="lastvalue" colspan="2">{{ device[4] }}</td>
-            <td class="tg-0pky" colspan="2"><b>Soil condition is {{ soil_condition }}</b></td>
+            <td class="tg-0pky" colspan="2"><b>Soil condition is {{ device[8] }}</b></td>
             <td>
               <a onclick="postTest('{{ device[0] }}')" href="{{url_for('intel_irris_sensor_config')}}"><img src="{{ url_for('static', filename='images/config.png') }}" style="cursor:pointer; width: 40px; height: 40px; border-radius:25%; border: 2px solid blue;"></a>
             </td>

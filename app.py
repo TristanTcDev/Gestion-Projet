@@ -142,9 +142,11 @@ def dashboard():
 								soil_moisture = 0
 								value_index_file = 'images/level'+str(0)+'.png'
 								value_type = "undefined"
+								soil_type = "undefined"
+								soil_condition = "undefined"
 								if(len(sensors) > 0):
 									for j in range(len(sensors)):
-										if(len(sensors[j]) == 5):
+										if(len(sensors[j]) == 7):
 											if sensors[j][0] == device_id:
 												print("Affichage sensor: ")
 												print(sensors[j])
@@ -160,8 +162,10 @@ def dashboard():
 													value_type = "raw"
 												soil_moisture = sensors[j][3]
 												value_index_file = 'images/level'+str(sensors[j][4])+'.png'
+												soil_type = sensors[j][5]
+												soil_condition = sensors[j][6]
 								
-								device = (device_id, device_name, sensor_type, sensor_id, soil_moisture, value_index_file, value_type)
+								device = (device_id, device_name, sensor_type, sensor_id, soil_moisture, value_index_file, value_type, soil_type, soil_condition)
 								#print("device number " + str(i) + " :")
 								all_devices.insert(i - 1, device)
 
@@ -817,6 +821,8 @@ def monitor_all_configured_sensors():
 										if sensor_type == 'capacitive':
 												value_index=get_capacitive_soil_condition(last_PostedSensorValue, deviceID, sensorID, read_config['sensors'][x])
 												sensor.insert(len(sensor), value_index)
+												sensor.insert(len(sensor), capacitive_soil_type)
+												sensor.insert(len(sensor), capacitive_soil_condition)
 												if deviceID == active_device_id and sensorID == active_sensor_id:
 														active_device_soil_condition = capacitive_soil_condition
 														active_device_configuration = read_config['sensors'][x] 
@@ -825,6 +831,8 @@ def monitor_all_configured_sensors():
 										if 'tensiometer' in sensor_type:	
 												value_index=get_tensiometer_soil_condition(last_PostedSensorValue, deviceID, sensorID, read_config['sensors'][x])
 												sensor.insert(len(sensor), value_index)
+												sensor.insert(len(sensor), tensiometer_soil_type)
+												sensor.insert(len(sensor), tensiometer_soil_condition)
 												if deviceID == active_device_id and sensorID == active_sensor_id:
 														active_device_soil_condition = tensiometer_soil_condition
 														active_device_configuration = read_config['sensors'][x]
@@ -978,8 +986,11 @@ chalky_capacitive_sensor_dry_max = 500
 loamy_capacitive_sensor_dry_max = 500
 
 def get_capacitive_sensor_dry_max(sensor_config):
+	global capacitive_soil_type
 
 	print("soil type is", sensor_config["value"]["soil_type"])
+
+	capacitive_soil_type = sensor_config["value"]["soil_type"]
 	
 	if sensor_config["value"]["soil_type"]=="clay":
 		return clay_capacitive_sensor_dry_max
@@ -1110,14 +1121,15 @@ def get_capacitive_soil_condition(raw_value, device_id, sensor_id, sensor_config
 
 def get_tensiometer_sensor_dry_max(sensor_config):
 	
+	
 	print("soil type is", sensor_config["value"]["soil_type"])
+
 	
 	return default_tensiometer_sensor_dry_max
 	
 ##TODO use BASE_URL
 ##TODO use raw resistor value to compute centibar and link with soil temperature	
 def get_tensiometer_soil_condition(raw_value, device_id, sensor_id, sensor_config): 
-		
 		if get_value_index_from_local_database:
 				WaziGate_url = 'http://localhost/devices/' + device_id + '/sensors/' + sensor_id
 				try:
@@ -1153,8 +1165,10 @@ def get_tensiometer_soil_condition(raw_value, device_id, sensor_id, sensor_confi
 				# 
 				#we adopt the following rule: 0:very dry; 1:dry; 2:dry-wet 3-wet-dry; 4-wet; 5-very wet/saturated
 
+				global tensiometer_soil_type 
 				print("soil type is", sensor_config["value"]["soil_type"])
-		
+				tensiometer_soil_type = sensor_config["value"]["soil_type"]
+
 				if raw_value == 255:
 					value_index_tensiometer=-1
 				elif raw_value == 240:
