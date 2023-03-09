@@ -73,11 +73,9 @@
             <td id="lastvalue" colspan="2">{{ device[4] }}</td>
             <td class="tg-0pky" colspan="2"><b>Soil condition is {{ device[8] }}</b></td>
             <td>
-              <a onclick="postTest('{{ device[0] }}')" href="{{url_for('intel_irris_sensor_config')}}"><img src="{{ url_for('static', filename='images/config.png') }}" style="cursor:pointer; width: 40px; height: 40px; border-radius:25%; border: 2px solid blue;"></a>
+              <a onclick="postTest('{{ device[0] }}')"><img src="{{ url_for('static', filename='images/config.png') }}" style="cursor:pointer; width: 40px; height: 40px; border-radius:25%; border: 2px solid blue;"></a>
             </td>
           </tr>
-                  <!-- href="{{ url_for('intel_irris_sensor_config') }}" -->
-                  <!--<td id="sensor_type">[{{ device[2] }}]</td> -->
         </thead>
       </table>
       <script>
@@ -91,7 +89,13 @@
             headers: new Headers({
               "content-type": "application/json"
             })
-          })
+          }).then( // Using a promise, the server has the time to get the value of the device
+            function(reponse) {
+              if(reponse.status == 200) {
+                window.location.href = "{{url_for('intel_irris_sensor_config')}}";
+              }
+            }
+          )
         }
       </script>
     </div>

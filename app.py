@@ -99,6 +99,7 @@ sensors = []
 all_devices = []
 t_all_devices = ()
 
+selected_device_id = "undefined"
 
 # Ce qu'il faut faire, lire le intel-irris-devices.json pour instancier chaque devices
 # Ensuite il faut lire le intel-irris-conf.json pour ajouter à chaque devices le sensor par défaut
@@ -442,11 +443,13 @@ def intel_irris_device_manager():
 													 length=length)
 #---------------------#
 
-# Fonction de test pour affihcer le device_id reçu
+# Fonction de test pour afficher le device_id reçu
 @app.route("/test-app-route-sensor", methods=['POST'])
 def test():
+	global selected_device_id
 	data = request.get_json()
 	print("Device id returned by the HTML: " + data)
+	selected_device_id = data
 	
 	# charger le JSON à partir de active_device_filename
 	with open(active_device_filename, 'r') as f:
@@ -461,15 +464,25 @@ def test():
 	# mettre temps de chargement car l'update prend du temps
 	return("hey")
 
+#---------------------#
+
+
 # Maintenant on doit modifier cette fonction pour pre-selectionner un sensor d'un device
 @app.route("/intel-irris-sensor-config", methods=['POST', 'GET'])
 def intel_irris_sensor_config():
+
 		# check if an active device is set
 		no_active = True
 		
 		get_ActiveDeviceSensorID()
 		
 		check_ActiveDeviceSensorID()
+		# check selected_device
+		if selected_device_id != "undefined":
+			print("ID du périphérique séléctionné depuis le dashboard: ")
+			print(selected_device_id)
+		else:
+			print("Aucun périphérique n'a été selectionné depuis le dashboard")
 		
 		#check if there is an active device for IIWA
 		if active_device_id != "undefined":
