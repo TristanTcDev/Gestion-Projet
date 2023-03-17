@@ -4,13 +4,18 @@
     "device_name": "default"
   },
   {
-    "device_id": "63f65e049c35b6598d88d4da",
+    "device_id": "64104c8ec704370d436c2bf3",
     "device_name": "SOIL-AREA-1",
     "sensors_structure": "1_capacitive"
   },
   {
-    "device_id": "63f65e059c35b6598d88d4de",
+    "device_id": "64104c8fc704370d436c2bf7",
     "device_name": "SOIL-AREA-2",
     "sensors_structure": "1_watermark"
+  },
+  {
+    "device_id": "64104ca6c704370d436c2c00",
+    "device_name": "SOIL-AREA-3",
+    "sensors_structure": "1_capacitive"
   }
 ]

@@ -462,7 +462,7 @@ def test():
 	with open(active_device_filename, 'w') as f:
 		json.dump(jsonval, f)
 	# mettre temps de chargement car l'update prend du temps
-	return("hey")
+	return("")
 
 #---------------------#
 
