@@ -466,6 +466,152 @@ def test():
 
 #---------------------#
 
+@app.route("/delete-device", methods=['POST'])
+def delete_device():
+	try:
+		# Get the device_id from the request data
+		idtodelete = request.get_json()
+		print("Device id returned by the HTML: " + idtodelete)
+		request_removed_from_devices = False
+		request_removed_from_active = False
+		request_removed_from_sensors = False
+
+		# ** first remove id from devices **
+		if (not request_removed_from_devices):
+
+				# 1. Read file contents
+				with open(added_devices_filename, "r") as file:
+						read_data = json.load(file)
+				no_devices = len(read_data)
+
+				# 2. Check index of sumbitted device id
+				for x in range(0, no_devices):
+						if read_data[x]['device_id'] == idtodelete:
+								requested_removal_exists = True
+								print("requested device_id to remove is valid....")
+								# remove device id and name
+								read_data.pop(x)
+								print("new devices data to be saved in config = %s" %
+											read_data)
+
+								# 3. Write json file
+								with open(added_devices_filename, "w") as file:
+										json.dump(read_data, file)
+								print("Device list updated!")
+								request_removed_from_devices = True
+								break
+
+		# ** next remove id from active-device if it exists **
+		if (requested_removal_exists and (not request_removed_from_active)):
+				# open active device config
+				active = open(active_device_filename, 'r')
+				active_device = json.loads(active.read())
+				# print(active_device)
+				active.close()
+				deviceID = active_device[0]['device_id']
+
+				# check if active device matches requested removal and update active
+				if (deviceID == idtodelete):
+						print("Device id to remove was active id..resolving this..")
+						# check if only one index is in list and empty active list
+						if (len(read_data) == 1):	 
+								# empty json file
+								open(active_device_filename, 'w').close()	 
+								print("Found no other device id to use! No devices in IIWA :(")
+								request_removed_from_active = True
+						
+						# if there are added device IDs, pick first and set as active
+						elif (len(read_data) > 1):	
+								active_device_Dict = [{
+										'device_id':
+										read_data[1]['device_id']
+								}]
+								
+								# convert python dic to JSON string
+								jsString = json.dumps(active_device_Dict)	 
+								jsFile = open(active_device_filename, "w")
+								jsFile.write(jsString)
+								jsFile.close()
+								print("Updated active device!")
+								request_removed_from_active = True
+
+		# ** lastly remove id from sensor config **
+		if (requested_removal_exists and (not request_removed_from_sensors)):
+
+				# obtain all sensor ids of the device
+				response_obtained = False
+				deviceID_exists = False
+				while (not response_obtained):
+						url = BASE_URL+"devices/%s" % idtodelete
+						response = requests.get(url, headers=WaziGate_headers)
+
+						if response.status_code == 200:
+								device_data = response.json()
+								deviceID_exists = True
+								response_obtained = True
+						
+						elif response.status_code == 404:
+								print("The requested device ID to remove does not exist. Failed to request its sensors")
+								deviceID_exists = False
+								response_obtained = True
+
+				# if the device id exists, get its sensor and remove in sensor config file
+				if deviceID_exists: 
+						device_sensors_num = len(device_data['sensors'])
+						# print("The device has %s sensor(s)"%no_sensors)
+
+						sensor_ids = []
+						# store sensor IDs
+						for x in range(0, device_sensors_num):
+								sensor_ids.append(device_data['sensors'][x]['id'])
+						#print("Sensors ids for the device are : %s"%sensor_ids)
+
+						with open(sensor_config_filename, "r") as file:
+								read_globals = json.load(file)
+
+						read_sensors = read_globals['sensors']
+						#print("read_sensors config : %s"%read_sensors)
+						globals_s_salinity = read_globals['globals']['soil_salinity']
+						globals_s_bulk_density = read_globals['globals']['soil_bulk_density']
+
+						config_sensors_count = len(read_sensors)
+						device_sensors_count = len(sensor_ids)
+						pop_indices = []
+						for x in range(0, config_sensors_count):
+								for y in range(0, device_sensors_count):
+										if (read_sensors[x]['sensor_id'] == sensor_ids[y]):
+												pop_indices.append(x)
+
+						for b in range(0, len(pop_indices)):
+								#if pop_indices[b] < len(read_sensors):
+								#	read_sensors.pop(pop_indices[b])
+								#else:
+								#	print("Index out of range: %s" % pop_indices[b])
+								read_sensors.pop(pop_indices[b])
+
+						print("New sensor config data : %s" % read_sensors)
+
+						# save new data to config file
+						update_config = {
+								"globals": {
+										"soil_salinity": globals_s_salinity,
+										"soil_bulk_density": globals_s_bulk_density
+								},
+								"sensors": read_sensors
+						}
+						# update with the sensor config
+						jsString = json.dumps(update_config)
+						jsFile = open(sensor_config_filename, "w")
+						jsFile.write(jsString)
+						jsFile.close()
+		
+		return jsonify({"status": "success", "message": "Device deleted successfully"})
+	except Exception as e:
+		return jsonify({"status": "error", "message": "Failed to delete device: {}".format(str(e))})
+
+#---------------------#
+
+
 
 # Maintenant on doit modifier cette fonction pour pre-selectionner un sensor d'un device
 @app.route("/intel-irris-sensor-config", methods=['POST', 'GET'])
