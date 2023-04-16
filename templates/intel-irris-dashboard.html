@@ -75,6 +75,10 @@
             <td>
               <a onclick="postTest('{{ device[0] }}')"><img src="{{ url_for('static', filename='images/config.png') }}" style="cursor:pointer; width: 40px; height: 40px; border-radius:25%; border: 2px solid blue;"></a>
             </td>
+            <!-- button to remove the device-->
+            <td>
+              <a onclick="deleteDevice('{{ device[0] }}')"><img src="{{ url_for('static', filename='images/level-1.png') }}" style="cursor:pointer; width: 40px; height: 40px; border-radius:25%; border: 2px solid red;"></a>
+            </td>
           </tr>
         </thead>
       </table>
@@ -96,6 +100,31 @@
               }
             }
           )
+        }
+        function deleteDevice(device_id) {
+          console.log(device_id);
+          fetch(`${window.origin}/delete-device`, {
+            method: "POST",
+            credentials: "include",
+            body: JSON.stringify(device_id),
+            cache: "no-cache",
+            headers: new Headers({
+              "content-type": "application/json"
+            })
+          }).then(response => {
+            // Handle the response from the server
+            if (response.ok) {
+              // Device deleted successfully, update the UI or perform any other actions
+              console.log("Device deleted successfully");
+              window.location.href = "{{url_for('dashboard')}}";
+            } else {
+              // Handle error if needed
+              console.error("Failed to delete device");
+            }
+          }).catch(error => {
+            // Handle any network or other errors
+            console.error("Failed to delete device", error);
+          });
         }
       </script>
     </div>
