@@ -130,12 +130,9 @@ def dashboard():
 						added_devices = "No devices added to IIWA. Go to Device Manager."
 				else:
 						# parse json intel-irris-devices
-						print("Added devices: ")
-						print(read_devices)
 						all_devices.clear()
 						for i in range(length):
 							if(read_devices[i]['device_id'] != 'default'):
-								#device = (read_devices[i]['device_id'], read_devices[i]['device_name']) #, read_devices[i]['sensors_structure'])
 								device_id = read_devices[i]['device_id']
 								device_name = read_devices[i]['device_name']
 								sensor_id = "undefined"
@@ -167,48 +164,42 @@ def dashboard():
 												soil_condition = sensors[j][6]
 								
 								device = (device_id, device_name, sensor_type, sensor_id, soil_moisture, value_index_file, value_type, soil_type, soil_condition)
-								#print("device number " + str(i) + " :")
 								all_devices.insert(i - 1, device)
 
 						no_devices = False
 						monitor_all_configured_sensors()
-
-				
-										
 				#---------------------#
-		if (no_devices == True):
-				return render_template("intel-irris-dashboard.html",
-															 added_devices=added_devices,
-															 no_devices=no_devices)
-		elif (no_devices == False):
-		
-				if active_device_id == "undefined" or active_device_configuration=={}: 
-						active_sensor_type = "undefined"
-						active_soil_type = "undefined"
-				else:
-						print("ACTIVE DEVICE CONFIGURATION: ")
-						print(active_device_configuration)
-						active_sensor_type = active_device_configuration['value']['sensor_type']
-						active_soil_type = active_device_configuration['value']['soil_type']
-						t_all_devices = tuple(all_devices)
-						# print("ACTIVE DEVICE: ")
-						# print(active_device_id)
-						#active_devices.insert(len(active_devices) + 1 ,active_device_id)
-						#t_active_devices = tuple(active_devices)
+		if no_devices:
+			return render_template("intel-irris-dashboard.html", added_devices=added_devices, no_devices=no_devices)
+		else:
+			if (active_device_id == "undefined" or active_device_configuration == {}):
+				set_default_device()
+			t_all_devices = tuple(all_devices)
+		return render_template("intel-irris-dashboard.html", no_devices=no_devices, t_all_devices=t_all_devices)
+# ---------------------#
 
-				# print("Active device value index")
-				# print(active_device_value_index)
 
-				# active_level_file='images/level'+str(active_device_value_index)+'.png'
-						
-
-				return render_template("intel-irris-dashboard.html",
-															 no_devices=no_devices,
-															 sensor_type=active_sensor_type,
-															 soil_type=active_soil_type,
-															 soil_condition=active_device_soil_condition,
-															 t_all_devices=t_all_devices)
-#---------------------#
+def set_default_device():
+	global active_device_id
+	print("Show first device of the tuple: ")
+	print(active_device_id)
+	# Set the first device as default device
+	active_device_id = all_devices[0][0]
+	active_sensor_id = all_devices[0][3]
+	active_sensor_type = all_devices[0][2]
+	active_soil_type = all_devices[0][7]
+	# Then, update the active-device json
+	active_device_sensor_dict = [{
+		'device_id': active_device_id,
+		'sensor_id': active_sensor_id
+	}]
+	# convert python dict to JSON 
+	jsString = json.dumps(active_device_sensor_dict)
+	jsFile = open(active_device_filename, "w")
+	jsFile.write(jsString)
+	jsFile.close()
+	print("Successfully updated active sensor id!")
+# ---------------------#
 
 
 @app.route("/intel-irris-devices", methods=['POST', 'GET'])
