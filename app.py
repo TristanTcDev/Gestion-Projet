@@ -97,7 +97,6 @@ active_device_configuration = {}
 sensors = []
 
 all_devices = []
-t_all_devices = ()
 
 selected_device_id = "undefined"
 
@@ -107,7 +106,7 @@ selected_device_id = "undefined"
 
 @app.route("/")
 def dashboard():
-		t_all_devices = ()
+		all_devices_tuple = ()
 		# check if there are devices in devices JSON
 		if path.isfile(added_devices_filename) is False:	# Check if data.json file exists
 				added_devices = "List of added devices not found!"
@@ -174,15 +173,13 @@ def dashboard():
 		else:
 			if (active_device_id == "undefined" or active_device_configuration == {}):
 				set_default_device()
-			t_all_devices = tuple(all_devices)
-		return render_template("intel-irris-dashboard.html", no_devices=no_devices, t_all_devices=t_all_devices)
+			all_devices_tuple = tuple(all_devices)
+		return render_template("intel-irris-dashboard.html", no_devices=no_devices, all_devices_tuple=all_devices_tuple)
 # ---------------------#
 
 
 def set_default_device():
 	global active_device_id
-	print("Show first device of the tuple: ")
-	print(active_device_id)
 	# Set the first device as default device
 	active_device_id = all_devices[0][0]
 	active_sensor_id = all_devices[0][3]
@@ -435,8 +432,8 @@ def intel_irris_device_manager():
 #---------------------#
 
 # Fonction de test pour afficher le device_id reçu
-@app.route("/test-app-route-sensor", methods=['POST'])
-def test():
+@app.route("/device-configuration", methods=['POST'])
+def device_configuration():
 	global selected_device_id
 	data = request.get_json()
 	print("Device id returned by the HTML: " + data)

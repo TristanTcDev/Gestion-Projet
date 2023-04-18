@@ -59,7 +59,7 @@
     <!-- <div class="semi-circle" id="semi-circle"></div> -->
     <!-- Partie qui permet l'affichage d'un périphérique, partie à rendre dynamique-->
     <!-- Utiliser les foreach de Jinja2-->
-    {% for device in t_all_devices %}
+    {% for device in all_devices_tuple %}
     <div id="soil_parameters" class="plot_center">
       <table class="tg">
         <thead>
@@ -73,7 +73,7 @@
             <td id="lastvalue" colspan="2">{{ device[4] }}</td>
             <td class="tg-0pky" colspan="2"><b>Soil condition is {{ device[8] }}</b></td>
             <td>
-              <a onclick="postTest('{{ device[0] }}')"><img src="{{ url_for('static', filename='images/config.png') }}" style="cursor:pointer; width: 40px; height: 40px; border-radius:25%; border: 2px solid blue;"></a>
+              <a onclick="deviceConfiguration('{{ device[0] }}')"><img src="{{ url_for('static', filename='images/config.png') }}" style="cursor:pointer; width: 40px; height: 40px; border-radius:25%; border: 2px solid blue;"></a>
             </td>
             <!-- button to remove the device-->
             <td>
@@ -83,9 +83,9 @@
         </thead>
       </table>
       <script>
-        function postTest(device_id) {
+        function deviceConfiguration(device_id) {
           console.log(device_id);
-          fetch(`${window.origin}/test-app-route-sensor`, {
+          fetch(`${window.origin}/device-configuration`, {
             method: "POST",
             credentials: "include",
             body: JSON.stringify(device_id),
