@@ -77,7 +77,7 @@
             </td>
             <!-- button to remove the device-->
             <td>
-              <a onclick="deleteDevice('{{ device[0] }}')"><img src="{{ url_for('static', filename='images/level-1.png') }}" style="cursor:pointer; width: 40px; height: 40px; border-radius:25%; border: 2px solid red;"></a>
+              <a onclick="deleteDevice('{{ device[0] }}')"><img src="{{ url_for('static', filename='images/cross.png') }}" style="cursor:pointer; width: 40px; height: 40px; border-radius:25%; border: 2px solid red;"></a>
             </td>
           </tr>
         </thead>
@@ -130,6 +130,30 @@
     </div>
     <p style="width:400px;"></p>  <!-- Add space between rows-->
     {% endfor %}
+    <br>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/update_devices_data.js') }}"></script>
+    <p>Add a device using the form below.</p>
+    <div class="add_device">
+      <p style="text-align:center"><em>Add a device to IIWA</em></p><br>
+      <form action="{{ url_for('intel_irris_device_manager') }}" method="post">
+        <select name="device_name" class="new_deviceName_select" id="new_deviceName_select"
+          onchange="showID(event)"
+          required>
+        </select>
+        <br><br>
+        <select name="device_id" class="new_deviceID_select" id="new_deviceID_select">
+        </select>
+        <br><br>
+        <select name="sensors_structure" class="sensors_structure" required>
+          <option value=""> -- Sensor(s) Structure -- </option>
+          <option value="1_capacitive">1 Capacitive</option>
+          <option value="1_watermark">1 Watermark</option>
+          <option value="2_watermark">2 Watermark</option>
+        </select>
+        <br><br>
+        <button type="submit" value="submit" class="add_button"></button>
+      </form>
+    </div>
 
     <!-- <p id="last_value_insight" style="text-align:center; white-space: nowrap"><span id="insight"></span></p> -->
     <!-- <p style="text-align: center;">Colors on graph are only indicative</p> -->

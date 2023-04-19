@@ -105,3 +105,37 @@ body {
     color: white;
     text-align: center;
   }
+
+
+  .div_containers, .add_device {
+    width: 80%;
+    padding: 20px;
+    border-radius: 25px;
+    border-style: solid;
+    border-width: thin;
+    border-color: #ccccb3;
+}
+
+  /* Add device button */
+.add_device button {
+    border-radius: 5px;
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+
+    --b: 1px;
+    height: 30px;
+    width: 30px;
+    aspect-ratio: 1/1;
+    border: 10px solid white;
+    background:
+        conic-gradient(from 90deg at var(--b) var(--b), #fff 90deg, #f4b548 0) calc(100% + var(--b)/2) calc(100% + var(--b)/2)/ calc(50% + var(--b)) calc(50% + var(--b));
+
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+
+    display: inline-block;
+}
