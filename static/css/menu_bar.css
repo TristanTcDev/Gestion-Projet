@@ -24,6 +24,10 @@ body {margin:0;font-family:Arial}
   display: none;
 }
 
+.topnav .show-on-mobile {
+  display: none;
+}
+
 .dropdown {
   float: left;
   overflow: hidden;
@@ -101,4 +105,10 @@ body {margin:0;font-family:Arial}
     width: 100%;
     text-align: left;
   }
+  .topnav.responsive .show-on-mobile {
+    display: block;
+    display: inline; 
+    margin: 0 0 0 10px;
+  }
+  
 }
