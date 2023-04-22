@@ -131,6 +131,13 @@
     <p style="width:400px;"></p>  <!-- Add space between rows-->
     {% endfor %}
     <br>
+
+    <!-- <p id="last_value_insight" style="text-align:center; white-space: nowrap"><span id="insight"></span></p> -->
+    <!-- <p style="text-align: center;">Colors on graph are only indicative</p> -->
+    <!-- <div id="values_chart" class="plot_center"> -->
+      <script type="text/javascript" src="{{ url_for('static', filename='js/plot_values_chart.js') }}"></script>
+    <!-- </div> -->
+    {% endif %}
     <script type="text/javascript" src="{{ url_for('static', filename='js/update_devices_data.js') }}"></script>
     <p>Add a device using the form below.</p>
     <div class="add_device">
@@ -154,13 +161,6 @@
         <button type="submit" value="submit" class="add_button"></button>
       </form>
     </div>
-
-    <!-- <p id="last_value_insight" style="text-align:center; white-space: nowrap"><span id="insight"></span></p> -->
-    <!-- <p style="text-align: center;">Colors on graph are only indicative</p> -->
-    <!-- <div id="values_chart" class="plot_center"> -->
-      <script type="text/javascript" src="{{ url_for('static', filename='js/plot_values_chart.js') }}"></script>
-    <!-- </div> -->
-    {% endif %}
   </div>
 </body>
 
