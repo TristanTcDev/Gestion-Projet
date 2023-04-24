@@ -7,25 +7,28 @@
         border-spacing: 0;
     }
     
-    .tg th, .tg td {
+    .tg th {
         font-size: 14px;
-        padding: 10px 5px;
+        padding: 10px 1px;
         text-align: center;
         vertical-align: middle;
         /**border: 1px solid #ccc;**/
     }
 
     .tg-c3ow {
-        width: 16%;
+        width: 14%;
         text-align: left;
     }
       
     .tg-c3ow img {
-        height: 40px;
+        height: 35px;
     }
-    
+
     #deviceid_dashboard {
+        font-size: 12px;
         position: relative;
+        text-align: center;
+        word-wrap: break-word;
     }
     
     #soil-condition {
