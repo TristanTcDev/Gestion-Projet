@@ -17,7 +17,7 @@
   <div class="topnav" id="myTopnav">
     <img src="{{ url_for('static', filename='images/intel-irris-logo.png') }}" height="40" style="vertical-align:middle;margin:4px 0px">
     <a href="{{ url_for('dashboard') }}" class="active"><img src="{{ url_for('static', filename='images/dashboard.png') }}" height="40" style="vertical-align:middle;margin:-14px 0px"><p class="show-on-mobile" >Dashboard</p> </a>
-    <a href="{{ url_for('intel_irris_device_manager') }}" ><img src="{{ url_for('static', filename='images/device.png') }}" height="40" style="vertical-align:middle;margin:-14px 0px"><p class="show-on-mobile" >Device Manager</p></a>
+    <!-- <a href="{{ url_for('intel_irris_device_manager') }}" ><img src="{{ url_for('static', filename='images/device.png') }}" height="40" style="vertical-align:middle;margin:-14px 0px"><p class="show-on-mobile" >Device Manager</p></a> -->
     <a href="{{ url_for('intel_irris_sensor_config') }}" ><img src="{{ url_for('static', filename='images/config.png') }}" height="40" style="vertical-align:middle;margin:-14px 0px"><p class="show-on-mobile" >Configurator</p></a>    
     <div class="dropdown">
       <button class="dropbtn">Menu
@@ -93,13 +93,18 @@
             headers: new Headers({
               "content-type": "application/json"
             })
-          }).then( // Using a promise, the server has the time to get the value of the device
-            function(reponse) {
+          }).then( reponse => {
               if(reponse.status == 200) {
                 window.location.href = "{{url_for('intel_irris_sensor_config')}}";
+              } 
+              else {
+                // Handle error if needed
+                console.error("Failed to delete device");
               }
-            }
-          )
+            }).catch(error => {
+            // Handle any network or other errors
+            console.error("Failed to delete device", error);
+          });
         }
         function deleteDevice(device_id) {
           console.log(device_id);
@@ -142,7 +147,7 @@
     <p>Add a device using the form below.</p>
     <div class="add_device">
       <p style="text-align:center"><em>Add a device to IIWA</em></p><br>
-      <form action="{{ url_for('intel_irris_device_manager') }}" method="post">
+      <form action="{{ url_for('dashboard') }}" method="post">
         <select name="device_name" class="new_deviceName_select" id="new_deviceName_select"
           onchange="showID(event)"
           required>
