@@ -108,28 +108,30 @@
         }
         function deleteDevice(device_id) {
           console.log(device_id);
-          fetch(`${window.origin}/delete-device`, {
-            method: "POST",
-            credentials: "include",
-            body: JSON.stringify(device_id),
-            cache: "no-cache",
-            headers: new Headers({
-              "content-type": "application/json"
-            })
-          }).then(response => {
-            // Handle the response from the server
-            if (response.ok) {
-              // Device deleted successfully, update the UI or perform any other actions
-              console.log("Device deleted successfully");
-              window.location.href = "{{url_for('dashboard')}}";
-            } else {
-              // Handle error if needed
-              console.error("Failed to delete device");
-            }
-          }).catch(error => {
-            // Handle any network or other errors
-            console.error("Failed to delete device", error);
-          });
+          if (confirm("Are you sure you want to delete this device?")) {
+              fetch(`${window.origin}/delete-device`, {
+                method: "POST",
+                credentials: "include",
+                body: JSON.stringify(device_id),
+                cache: "no-cache",
+                headers: new Headers({
+                  "content-type": "application/json"
+                })
+              }).then(response => {
+                // Handle the response from the server
+                if (response.ok) {
+                  // Device deleted successfully, update the UI or perform any other actions
+                  console.log("Device deleted successfully");
+                  window.location.href = "{{url_for('dashboard')}}";
+                } else {
+                  // Handle error if needed
+                  console.error("Failed to delete device");
+                }
+              }).catch(error => {
+                // Handle any network or other errors
+                console.error("Failed to delete device", error);
+              });
+          }
         }
       </script>
     </div>
