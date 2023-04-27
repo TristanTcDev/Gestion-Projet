@@ -19,7 +19,9 @@ Install WaziEdge and its dependencies. Only MongoDB up to v5.0 is supported.
 ---
 	> sudo apt install golang-go
 	
-Download MongoDB Community Server from https://www.mongodb.com/try/download/community and select the correct platform/architecture
+Download MongoDB Community Server from https://www.mongodb.com/try/download/community, select the correct platform/architecture and select the server package, then install the package with dpkg:
+
+	> sudo dpkg -i mongodb-org-server_5.0.x_arch.deb (with x correponding to the subversion number and arch=amd64 or arm64)
 
 Then, get WaziEdge source files:
 	
