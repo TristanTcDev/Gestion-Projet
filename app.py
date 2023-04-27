@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 import requests, json, os
 from os import path
 from datetime import datetime
@@ -105,54 +105,7 @@ selected_device_id = "undefined"
 # le device_id est partagé entre un device et un sensor 
 
 @app.route("/")
-def dashboard():
-		# add a new device
-		f = open(added_devices_filename, 'r')
-		read_devices = json.loads(f.read())
-		length = len(read_devices)
-		f.close()
-
-
-		if request.method == 'POST':	
-			add_device_id = request.form.get('device_id')
-			add_device_name = request.form.get('device_name')
-			sensors_structure = request.form.get('sensors_structure')
-
-			#-- Add a new device_id and device_name to json using html form ---#
-			if (add_device_id is not None) and (add_device_name is not None) and (sensors_structure is not None):
-					# check if devices list has been updates
-
-					# device list not updated
-					if (length == 1): 
-							print("Added device list not updated! Updating..")
-
-							# write device_id as active one in json
-							active_device_Dict = [{'device_id': add_device_id}]
-							# convert python dic to JSON string
-							jsString = json.dumps(active_device_Dict)	 
-							jsFile = open(active_device_filename, "w")
-							jsFile.write(jsString)
-							jsFile.close()
-							print("Added device set as active device")
-
-					# add new devices in JSON file
-
-					add_device_dict = {
-							'device_id': add_device_id,
-							'device_name': add_device_name,
-							'sensors_structure': sensors_structure
-					}
-
-					# 1. Read file contents
-					with open(added_devices_filename, "r") as file:
-							read_data = json.load(file)
-					# 2. Update json object
-					read_data.append(add_device_dict)
-					# 3. Write json file
-					with open(added_devices_filename, "w") as file:
-							json.dump(read_data, file)
-					print("Device list updated!")
-					
+def dashboard():				
 		all_devices_tuple = ()
 		# check if there are devices in devices JSON
 		if path.isfile(added_devices_filename) is False:	# Check if data.json file exists
@@ -224,6 +177,56 @@ def dashboard():
 		return render_template("intel-irris-dashboard.html", no_devices=no_devices, all_devices_tuple=all_devices_tuple)
 # ---------------------#
 
+@app.route("/", methods=['POST'])
+def add_device_iiwa():
+		# add a new device
+		f = open(added_devices_filename, 'r')
+		read_devices = json.loads(f.read())
+		length = len(read_devices)
+		f.close()
+
+
+		if request.method == 'POST':	
+			add_device_id = request.form.get('device_id')
+			add_device_name = request.form.get('device_name')
+			sensors_structure = request.form.get('sensors_structure')
+
+			#-- Add a new device_id and device_name to json using html form ---#
+			if (add_device_id is not None) and (add_device_name is not None) and (sensors_structure is not None):
+					# check if devices list has been updates
+
+					# device list not updated
+					if (length == 1): 
+							print("Added device list not updated! Updating..")
+
+							# write device_id as active one in json
+							active_device_Dict = [{'device_id': add_device_id}]
+							# convert python dic to JSON string
+							jsString = json.dumps(active_device_Dict)	 
+							jsFile = open(active_device_filename, "w")
+							jsFile.write(jsString)
+							jsFile.close()
+							print("Added device set as active device")
+
+					# add new devices in JSON file
+
+					add_device_dict = {
+							'device_id': add_device_id,
+							'device_name': add_device_name,
+							'sensors_structure': sensors_structure
+					}
+
+					# 1. Read file contents
+					with open(added_devices_filename, "r") as file:
+							read_data = json.load(file)
+					# 2. Update json object
+					read_data.append(add_device_dict)
+					# 3. Write json file
+					with open(added_devices_filename, "w") as file:
+							json.dump(read_data, file)
+					print("Device list updated!")
+		return redirect(url_for('dashboard'))
+# ---------------------#
 
 def set_default_device():
 	global active_device_id
@@ -244,7 +247,6 @@ def set_default_device():
 	jsFile.close()
 	print("Successfully updated active sensor id!")
 # ---------------------#
-
 
 @app.route("/intel-irris-devices", methods=['POST', 'GET'])
 def intel_irris_device_manager():
@@ -498,7 +500,6 @@ def device_configuration():
 		json.dump(jsonval, f)
 	# mettre temps de chargement car l'update prend du temps
 	return("")
-
 #---------------------#
 
 @app.route("/delete-device", methods=['POST'])
